@@ -22,21 +22,6 @@ public class DataBaseConnect {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
-        /*try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
-            if (input == null) {
-                throw new IllegalStateException("config.properties n'a pas été trouvé dans le classpath");
-            }
-            Properties prop = new Properties();
-            prop.load(input);
-            this.url = prop.getProperty("database.url");
-            this.user = prop.getProperty("database.user");
-            this.password = prop.getProperty("database.password");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }*/
-
-
     }
 
 
