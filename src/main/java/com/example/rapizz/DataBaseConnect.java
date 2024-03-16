@@ -11,7 +11,7 @@ public class DataBaseConnect {
     public String url;
     public String user;
     public String password;
-    DataBaseConnect(String url, String user, String password) {
+    DataBaseConnect() {
 
         try (FileInputStream input = new FileInputStream("src/main/resources/config_db.properties")) {
             Properties prop = new Properties();
