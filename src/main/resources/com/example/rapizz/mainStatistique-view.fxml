@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+
+<AnchorPane fx:id="rootPane" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.rapizz.StatistiqueController">
+
+    <VBox fx:id="mainVBox" alignment="TOP_CENTER" spacing="20.0" AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <HBox alignment="CENTER" spacing="20.0" style="-fx-background-color: #4a6cf3; -fx-padding: 10;">
+            <Label text="Nom Opérateur" textFill="white" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label text="Rapizz" style="-fx-font-size: 24; -fx-font-weight: bold;" textFill="white" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="deconnexionButton" text="Déconnexion" textFill="white" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-padding: 0; -fx-cursor: hand;" />
+        </HBox>
+
+        <!-- HBox pour les informations du client et du livreur -->
+        <HBox alignment="CENTER" spacing="20.0" style="-fx-padding: 10;" HBox.hgrow="ALWAYS">
+            <VBox alignment="CENTER" spacing="5.0">
+                <Label text="Meilleur Client" style="-fx-font-size: 14; -fx-font-weight: bold;" />
+                <!-- AnchorPane pour centrer le HBox du client et limiter sa largeur -->
+                <AnchorPane fx:id="clientInfoContainer" HBox.hgrow="ALWAYS">
+                    <HBox fx:id="clientInfoBox" alignment="CENTER" style="-fx-border-color: #4a6cf3; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10;" maxWidth="Infinity">
+                        <!-- VBox à l'intérieur de la HBox pour empiler les labels verticalement -->
+                        <VBox alignment="CENTER_LEFT" spacing="10.0">
+                            <Label text="Nom client" textFill="black" />
+                            <Label text="Prénom client" textFill="black" />
+                        </VBox>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <VBox alignment="CENTER_RIGHT" spacing="10.0">
+                            <Label text="Solde dépensé : 0 €" textFill="black" />
+                            <Label text="Nombre pizza commandé : 99" textFill="black" />
+                        </VBox>
+                    </HBox>
+                </AnchorPane>
+            </VBox>
+
+            <VBox alignment="CENTER" spacing="5.0">
+                <Label text="Pire Livreur" style="-fx-font-size: 14; -fx-font-weight: bold;" />
+                <!-- AnchorPane pour centrer le HBox du livreur et limiter sa largeur -->
+                <AnchorPane fx:id="livreurInfoContainer" HBox.hgrow="ALWAYS">
+                    <HBox fx:id="livreurInfoBox" alignment="CENTER" style="-fx-border-color: #4a6cf3; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10;" maxWidth="Infinity">
+                        <!-- VBox à l'intérieur de la HBox pour empiler les labels verticalement -->
+                        <VBox alignment="CENTER_LEFT" spacing="10.0">
+                            <Label text="Nom livreur" textFill="black" />
+                            <Label text="Prénom livreur" textFill="black" />
+                        </VBox>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <VBox alignment="CENTER_RIGHT" spacing="10.0">
+                            <Label text="Nombre de livraison en retard : 99" textFill="black" />
+                            <Label text="Véhicule utilisé : model (bleu) immat"/>
+                        </VBox>
+                    </HBox>
+                </AnchorPane>
+            </VBox>
+        </HBox>
+
+        <HBox alignment="CENTER" spacing="20.0" style="-fx-padding: 10;" HBox.hgrow="ALWAYS">
+            <VBox alignment="CENTER" spacing="5.0">
+                <Label text="Pizza/Ingrédient" style="-fx-font-size: 14; -fx-font-weight: bold;" />
+                <!-- AnchorPane pour centrer le HBox du client et limiter sa largeur -->
+                <AnchorPane fx:id="bestPizzaIngredientContainer" HBox.hgrow="ALWAYS">
+                    <HBox fx:id="bestPizzaIngredientBox" alignment="CENTER" style="-fx-border-color: #4a6cf3; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10;" maxWidth="Infinity">
+                        <!-- VBox à l'intérieur de la HBox pour empiler les labels verticalement -->
+                        <VBox alignment="CENTER_LEFT" spacing="10.0">
+                            <Label text="Pizza la plus apprécié : Raclette" textFill="black" />
+                            <Label text="Nombre de fois commandé : 56" textFill="black" />
+                        </VBox>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <VBox alignment="CENTER" spacing="10.0">
+                            <Label text="Ingrédient le plus apprécié : Pomme de Terre" textFill="black" />
+                        </VBox>
+                    </HBox>
+                </AnchorPane>
+            </VBox>
+        </HBox>
+
+        <HBox alignment="CENTER" spacing="20.0" style="-fx-padding: 10;" HBox.hgrow="ALWAYS">
+            <VBox alignment="CENTER" spacing="5.0">
+                <Label text="Véhicule le moins utilisé" style="-fx-font-size: 14; -fx-font-weight: bold;" />
+                <!-- AnchorPane pour centrer le HBox du client et limiter sa largeur -->
+                <AnchorPane fx:id="vehiculeNoUseContainer" HBox.hgrow="ALWAYS">
+                    <HBox fx:id="vehiculeNoUseInfoBox" alignment="CENTER" style="-fx-border-color: #4a6cf3; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10;" maxWidth="Infinity">
+                        <!-- VBox à l'intérieur de la HBox pour empiler les labels verticalement -->
+                        <!--<VBox alignment="CENTER_LEFT" spacing="10.0">
+                            <Label text="Nom client" textFill="black" />
+                            <Label text="Prénom client" textFill="black" />
+                        </VBox>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <VBox alignment="CENTER_RIGHT" spacing="10.0">
+                            <Label text="Solde dépensé : 0 €" textFill="black" />
+                            <Label text="Nombre pizza commandé : 99" textFill="black" />
+                        </VBox>-->
+                        <Label text="Véhicule le moins utilisé : model (bleu) immat" textFill="black" />
+                    </HBox>
+                </AnchorPane>
+            </VBox>
+
+            <VBox alignment="CENTER" spacing="5.0">
+                <Label text="Statistique commande" style="-fx-font-size: 14; -fx-font-weight: bold;" />
+                <!-- AnchorPane pour centrer le HBox du livreur et limiter sa largeur -->
+                <AnchorPane fx:id="statCommandeInfoContainer" HBox.hgrow="ALWAYS">
+                    <HBox fx:id="statCommandeInfoBox" alignment="CENTER" style="-fx-border-color: #4a6cf3; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10;" maxWidth="Infinity">
+                        <!-- VBox à l'intérieur de la HBox pour empiler les labels verticalement -->
+                        <VBox alignment="CENTER" spacing="10.0">
+                            <Label text="Nombre de commande par client : 4" textFill="black" />
+                            <Label text="Prix moyen des commandes : 26 €" textFill="black" />
+                        </VBox>
+
+                    </HBox>
+                </AnchorPane>
+            </VBox>
+        </HBox>
+
+    </VBox>
+
+</AnchorPane>
