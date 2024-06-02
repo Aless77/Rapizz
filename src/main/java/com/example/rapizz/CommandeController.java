@@ -5,7 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
-public class CommandeController_test {
+public class CommandeController {
 
     @FXML
     private VBox vBoxPizzas;

@@ -12,7 +12,7 @@ public class CommandeApp extends Application {
     public void start(Stage primaryStage) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(CommandeApp.class.getResource("Commande_test.fxml"));
+            loader.setLocation(CommandeApp.class.getResource("commande-view.fxml"));
             AnchorPane root = loader.load();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
