@@ -16,58 +16,46 @@
             </HBox>
 
             <!-- Menu -->
-            <HBox spacing="20.0" alignment="CENTER">
-                <Button text="Historique des commandes" />
-                <Button text="Commande" style="-fx-background-color: #4a6cf3; -fx-text-fill: white;" />
-                <Button text="Compte" />
+            <HBox spacing="20.0" alignment="CENTER" style="-fx-padding: 10;">
+                <Button fx:id="btnHistorique" text="Historique des commandes" prefWidth="200.0" />
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="btnCommande" text="Commande" prefWidth="200.0" />
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="btnCompte" text="Compte" prefWidth="200.0" />
             </HBox>
 
             <!-- Main Content -->
             <HBox spacing="20.0" alignment="CENTER" style="-fx-padding: 20;">
                 <!-- Left Section -->
-                <VBox spacing="20.0" alignment="TOP_CENTER">
-                    <!-- Pizza 1 -->
-                    <VBox spacing="10.0" alignment="TOP_CENTER" style="-fx-border-color: black; -fx-padding: 10;">
-                        <Label text="Nom Pizza" />
-                        <ComboBox fx:id="comboBoxPizza1" />
-                        <ComboBox fx:id="comboBoxTaille1" promptText="Taille" />
-                        <Label text="prix" />
-                        <Button text="Ajoutée" />
-                        <Label text="Ingrédients : sauce tomate, mozzarella" />
+                <ScrollPane fitToWidth="true" fitToHeight="true">
+                    <VBox fx:id="vBoxPizzas" spacing="20.0" alignment="TOP_CENTER" style="-fx-padding: 10;">
                     </VBox>
-                    <!-- Pizza 2 -->
-                    <VBox spacing="10.0" alignment="TOP_CENTER" style="-fx-border-color: black; -fx-padding: 10;">
-                        <Label text="Nom Pizza" />
-                        <ComboBox fx:id="comboBoxPizza2" />
-                        <ComboBox fx:id="comboBoxTaille2" promptText="Taille" />
-                        <Label text="prix" />
-                        <Button text="Ajoutée" />
-                        <Label text="Ingrédients : sauce crème, poulet" />
-                    </VBox>
-                </VBox>
+                </ScrollPane>
 
                 <!-- Right Section -->
                 <VBox spacing="20.0" alignment="TOP_CENTER">
                     <Label text="Récapitulatif de la commande" style="-fx-font-size: 18;" />
                     <TableView fx:id="tableViewRecap">
                         <columns>
-                            <TableColumn text="Nom Pizza" />
-                            <TableColumn text="taille" />
-                            <TableColumn text="prix unitaire" />
+                            <TableColumn fx:id="colNomPizza" text="Nom Pizza" />
+                            <TableColumn fx:id="colTaille" text="Taille" />
+                            <TableColumn fx:id="colPrixUnitaire" text="Prix unitaire" />
                         </columns>
                     </TableView>
+
                     <GridPane hgap="10" vgap="10">
                         <Label text="Adresse" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                        <TextField promptText="Remplissage par défaut" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <TextField fx:id="textFieldAdresse" promptText="Remplissage par défaut" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                         <Label text="Complément adresse" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                        <TextField promptText="Remplissage par défaut" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                        <TextField fx:id="textFieldComplementAdresse" promptText="Remplissage par défaut" GridPane.columnIndex="3" GridPane.rowIndex="0" />
                         <Label text="Téléphone" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                        <TextField promptText="Remplissage par défaut" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="textFieldTelephone" promptText="Remplissage par défaut" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                     </GridPane>
                     <Button text="Commander" />
-                    <Label text="Prix total" />
+                    <Label fx:id="labelPrixTotal" text="Prix total: 0.00 €" />
                 </VBox>
             </HBox>
         </VBox>
     </children>
 </AnchorPane>
+
