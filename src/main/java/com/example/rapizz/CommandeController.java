@@ -67,7 +67,7 @@ public class CommandeController {
     private VBox createPizzaBox(String pizzaName, String base) {
         VBox pizzaBox = new VBox(10);
         pizzaBox.setAlignment(Pos.CENTER);
-        pizzaBox.setStyle("-fx-border-color: black; -fx-padding: 10;");
+        pizzaBox.setStyle("-fx-border-color: #4a6cf3; -fx-border-width: 1; -fx-border-radius: 10; -fx-padding: 10;");
 
         // Définir la taille préférée pour le VBox
         pizzaBox.setPrefWidth(200);  // Largeur préférée
