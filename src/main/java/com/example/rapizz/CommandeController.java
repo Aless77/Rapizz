@@ -76,7 +76,7 @@ public class CommandeController {
         Label labelName = new Label(pizzaName);
         ComboBox<String> comboBoxTaille = new ComboBox<>();
         comboBoxTaille.setPromptText("Taille"); // Définir le texte "Taille"
-        comboBoxTaille.getItems().addAll("Small", "Medium", "Large");
+        comboBoxTaille.getItems().addAll("Naine", "Humaine", "Ogresse");
         Label labelBase = new Label("Base : " + base);
         Button buttonAdd = new Button("Ajoutée");
         buttonAdd.setOnAction(event -> handleAddPizza(pizzaName, comboBoxTaille.getValue()));
@@ -107,11 +107,11 @@ public class CommandeController {
 
     private double calculatePrice(String size) {
         switch (size) {
-            case "Small":
+            case "Naine":
                 return 8.0;
-            case "Medium":
+            case "Humaine":
                 return 10.0;
-            case "Large":
+            case "Ogresse":
                 return 12.0;
             default:
                 return 0.0;
