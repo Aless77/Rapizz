@@ -35,7 +35,7 @@
                 <!-- Right Section -->
                 <VBox spacing="20.0" alignment="TOP_CENTER">
                     <Label text="Récapitulatif de la commande" style="-fx-font-size: 18;" />
-                    <TableView fx:id="tableViewRecap">
+                    <TableView fx:id="tableViewRecap" >
                         <columns>
                             <TableColumn fx:id="colNomPizza" text="Nom Pizza" />
                             <TableColumn fx:id="colTaille" text="Taille" />
@@ -44,7 +44,7 @@
                     </TableView>
 
                     <GridPane hgap="10" vgap="10">
-                        <Label text="Adresse" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <Label text="Adresse" GridPane.columnIndex="0" GridPane.rowIndex="0" textFill="#4a6cf3" style="-fx-font-weight: bold;" />
                         <TextField fx:id="textFieldAdresse" promptText="Remplissage par défaut" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                         <Label text="Complément adresse" GridPane.columnIndex="2" GridPane.rowIndex="0" />
                         <TextField fx:id="textFieldComplementAdresse" promptText="Remplissage par défaut" GridPane.columnIndex="3" GridPane.rowIndex="0" />
