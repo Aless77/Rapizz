@@ -12,14 +12,16 @@ public class User {
     private final String email;
     private final String adresse;
     private final String complementAdresse;
+    private final boolean isOperateur;
     private double solde;
 
-    public static User getUserById(int idUser, Connection cnx) throws SQLException { // Méthode pour récupérer un utilisateur par son id, null si l'utilisateur n'existe pas
-        String query = "SELECT * FROM user WHERE id_user = ?";
+    public static User getUser(String email, String password, Connection cnx) throws SQLException { // Méthode pour récupérer un utilisateur par son id, null si l'utilisateur n'existe pas
+        String query = "SELECT * FROM user WHERE email = ? AND password = ?";
 
         // Utilisation de PreparedStatement pour sécuriser la requête
         try (PreparedStatement pstmt = cnx.prepareStatement(query)) {
-            pstmt.setInt(1, idUser); // Insertion de l'id user dans la requête
+            pstmt.setString(1, email);
+            pstmt.setString(2, password);
 
             // Exécution de la requête
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -32,19 +34,20 @@ public class User {
                             rs.getString("email"),
                             rs.getString("adresse"),
                             rs.getString("complement_adresse"),
-                            rs.getDouble("solde")
+                            rs.getDouble("solde"),
+                            rs.getBoolean("operateur")
                     );
                 }
             } catch (SQLException e) {
                 System.out.println("Erreur lors de l'exécution de la requête, getUSerById : " + e.getMessage());
-                throw new RuntimeException(e);
+                return null;
             }
         }
 
         return null;
     }
 
-    public User(int idUser, String nom, String prenom, String email, String adresse, String complementAdresse, double solde) {
+    public User(int idUser, String nom, String prenom, String email, String adresse, String complementAdresse, double solde, boolean isOperateur) {
         // Initialisation des attributs
         this.idUser = idUser;
         this.nom = nom;
@@ -53,6 +56,15 @@ public class User {
         this.adresse = adresse;
         this.complementAdresse = complementAdresse;
         this.solde = solde;
+        this.isOperateur = isOperateur;
+    }
+
+    public String getNom() { // Méthode pour récupérer le nom de l'utilisateur
+        return nom;
+    }
+
+    public String getPrenom() { // Méthode pour récupérer le prénom de l'utilisateur
+        return prenom;
     }
 
     @Override
@@ -84,6 +96,10 @@ public class User {
         return solde;
     }
 
+    public boolean isOperateur() { // Méthode pour savoir si l'utilisateur est un opérateur
+        return isOperateur;
+    }
+
     public String showSolde() { // Méthode pour afficher le solde de l'utilisateur
         return solde + " €";
     }
@@ -108,3 +124,4 @@ public class User {
     }
 
 }
+

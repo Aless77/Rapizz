@@ -12,17 +12,18 @@ import java.sql.SQLException;
 
 public class MainStatistique extends Application {
 
+    public static void startNewWindow(User user, Connection cnx) throws SQLException, IOException {
+        MainStatistique app = new MainStatistique();
+        app.user = user;
+        app.cnx = cnx;
+        app.start(new Stage());
+    }
+
     public User user;
+    public Connection cnx;
 
     @Override
     public void start(Stage stage) throws IOException, SQLException {
-        Connection cnx = new DataBaseConnect().connect();
-
-        try {
-            this.user = User.getUserById(1, cnx);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
 
         StatistiqueController controller = new StatistiqueController(user, cnx);
 
@@ -35,6 +36,8 @@ public class MainStatistique extends Application {
         stage.show();
 
     }
+
+
 
     public static void main(String[] args) {
         launch();
