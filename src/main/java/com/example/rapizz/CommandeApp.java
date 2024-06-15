@@ -20,6 +20,7 @@ public class CommandeApp extends Application {
         app.user = user;
         app.cnx = cnx;
         app.start(new Stage());
+
     }
 
     @Override
