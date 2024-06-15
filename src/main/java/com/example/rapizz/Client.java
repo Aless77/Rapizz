@@ -4,8 +4,8 @@ public class Client extends User {
     
     private final int nbCommande;
     
-    public Client (int idUser, String nom, String prenom, String email, String adresse, String complementAdresse, Double solde, boolean isOperateur, int nbCommande) {
-        super(idUser, nom, prenom, email, adresse, complementAdresse, solde, isOperateur);
+    public Client (int idUser, String nom, String prenom, String email, String adresse, String complementAdresse, Double solde, boolean isOperateur, int nbCommande, int telephone) {
+        super(idUser, nom, prenom, email, adresse, complementAdresse, solde, isOperateur, telephone);
         this.nbCommande = nbCommande;
     }
 

@@ -78,8 +78,7 @@ public class LoginController {
                 MainStatistique.startNewWindow(user, cnx);
             } else {
                 // Ouvrir la fenêtre de commande
-                //MainCommande.startNewWindow(user, cnx);
-                System.out.println("User is not an operator");
+                CommandeApp.startNewWindow(user, cnx);
             }
             Stage currentStage = (Stage) rootPane.getScene().getWindow();
             currentStage.close();

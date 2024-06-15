@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.effect.DropShadow;
@@ -15,6 +16,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -99,6 +101,42 @@ public class StatistiqueController {
 
     private ObservableList<Client> data = FXCollections.observableArrayList();
 
+    @FXML
+    public void initialize() throws SQLException {
+        // Ajouter des gestionnaires d'événements pour le bouton
+        deconnexionButton.setOnMousePressed(event -> increaseButtonSize());
+        deconnexionButton.setOnMouseReleased(event -> {
+            try {
+                resetButtonSize();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        // Ajuster la largeur des HBox
+        rootPane.widthProperty().addListener((obs, oldVal, newVal) -> {
+            double newWidth = newVal.doubleValue(); // Nouvelle largeur de la fenêtre
+            clientInfoBox.setPrefWidth(newWidth * 0.45); // Ajuster la largeur de la boîte d'informations client
+            livreurInfoBox.setPrefWidth(newWidth * 0.45); // Ajuster la largeur de la boîte d'informations livreur
+            bestPizzaIngredientBox.setPrefWidth(newWidth * 0.60); // Ajuster la largeur de la boîte d'informations de la meilleure pizza
+            statCommandeInfoBox.setPrefWidth(newWidth * 0.30); // Ajuster la largeur de la boîte d'informations sur les statistiques de commande
+            clientGridPane.maxWidthProperty().bind(vboxClientGridPane.widthProperty().multiply(0.6));
+            clientGridPane.prefWidthProperty().bind(vboxClientGridPane.widthProperty().multiply(0.6));
+        });
+
+        nameUser.setText(user.toString());
+
+        getCA();
+        getBestClient();
+        getLePlusNulLivreur();
+        getBestPizza();
+        getBestIngredient();
+        getMoyCommandeClient();
+        getAllBestClient();
+        fillClientGridPane();
+    }
 
     public StatistiqueController(User user, Connection cnx) {
         this.user = user;
@@ -111,7 +149,6 @@ public class StatistiqueController {
                 "GROUP BY c.id_user " +
                 "ORDER BY nb_pizza DESC " +
                 "LIMIT 1;";
-
 
         // Utilisation de PreparedStatement pour sécuriser la requête
         try (PreparedStatement pstmt = cnx.prepareStatement(query)) {
@@ -134,7 +171,7 @@ public class StatistiqueController {
     public void getLePlusNulLivreur() throws SQLException {
         String query = "SELECT l.nom, l.prenom, l.immatriculation, COUNT(c.id_commande) as nb_commandes " +
                 "FROM livreur l JOIN commande c ON l.id_livreur = c.id_livreur " +
-                "WHERE c.date_end_livraison > c.date_start_livraison + INTERVAL 30 MINUTE GROUP BY l.id_livreur " +
+                "WHERE c.date_end_livraison > c.date_commande + INTERVAL 30 MINUTE GROUP BY l.id_livreur " +
                 "LIMIT 1;";
 
         // Utilisation de PreparedStatement pour sécuriser la requête
@@ -245,14 +282,15 @@ public class StatistiqueController {
     public void getAllBestClient() {
         String query = "SELECT * " +
                 "FROM (" +
-                " SELECT u.id_user AS id_user, u.prenom, u.nom, u.email, COUNT(c.id_commande) AS nb_commande, (SUM(c.prix_total) / COUNT(c.id_commande)) AS prix_moyen " +
+                " SELECT u.id_user AS id_user, u.prenom, u.nom, u.email, u.telephone, COUNT(c.id_commande) AS nb_commande, (SUM(c.prix_total) / COUNT(c.id_commande)) AS prix_moyen " +
                 "        FROM user AS u " +
                 "        JOIN commande AS c ON u.id_user = c.id_client " +
                 "        WHERE u.operateur != 1 " +
                 "        GROUP BY u.id_user " +
                 "ORDER BY nb_commande " +
                 ") AS nb_commande_alluser " +
-                "WHERE nb_commande_alluser.nb_commande >= ?";
+                "WHERE nb_commande_alluser.nb_commande >= ? " +
+                "ORDER BY nb_commande_alluser.nb_commande DESC;";
 
         // Utilisation de PreparedStatement pour sécuriser la requête
         try (PreparedStatement pstmt = cnx.prepareStatement(query)) {
@@ -270,7 +308,8 @@ public class StatistiqueController {
                             null,
                             0.0,
                             false,
-                            rs.getInt("nb_commande")
+                            rs.getInt("nb_commande"),
+                            rs.getInt("telephone")
                     );
                     data.add(c);
                 }
@@ -322,35 +361,6 @@ public class StatistiqueController {
         }
     }
 
-    @FXML
-    public void initialize() throws SQLException {
-        // Ajouter des gestionnaires d'événements pour le bouton
-        deconnexionButton.setOnMousePressed(event -> increaseButtonSize());
-        deconnexionButton.setOnMouseReleased(event -> resetButtonSize());
-
-        // Ajuster la largeur des HBox
-        rootPane.widthProperty().addListener((obs, oldVal, newVal) -> {
-            double newWidth = newVal.doubleValue(); // Nouvelle largeur de la fenêtre
-            clientInfoBox.setPrefWidth(newWidth * 0.45); // Ajuster la largeur de la boîte d'informations client
-            livreurInfoBox.setPrefWidth(newWidth * 0.45); // Ajuster la largeur de la boîte d'informations livreur
-            bestPizzaIngredientBox.setPrefWidth(newWidth * 0.60); // Ajuster la largeur de la boîte d'informations de la meilleure pizza
-            statCommandeInfoBox.setPrefWidth(newWidth * 0.30); // Ajuster la largeur de la boîte d'informations sur les statistiques de commande
-            clientGridPane.maxWidthProperty().bind(vboxClientGridPane.widthProperty().multiply(0.6));
-            clientGridPane.prefWidthProperty().bind(vboxClientGridPane.widthProperty().multiply(0.6));
-        });
-
-        nameUser.setText(user.toString());
-
-        getCA();
-        getBestClient();
-        getLePlusNulLivreur();
-        getBestPizza();
-        getBestIngredient();
-        getMoyCommandeClient();
-        getAllBestClient();
-        fillClientGridPane();
-    }
-
     // Méthode pour augmenter la taille du bouton
     private void increaseButtonSize() {
         ScaleTransition scaleUp = new ScaleTransition(Duration.millis(200), deconnexionButton);
@@ -360,11 +370,15 @@ public class StatistiqueController {
     }
 
     // Méthode pour réinitialiser la taille du bouton
-    private void resetButtonSize() {
+    private void resetButtonSize() throws SQLException, IOException {
         ScaleTransition scaleDown = new ScaleTransition(Duration.millis(200), deconnexionButton);
         scaleDown.setToX(1.0);
         scaleDown.setToY(1.0);
         scaleDown.play();
+        Login.startNewWindow();
+        Stage currentStage = (Stage) rootPane.getScene().getWindow();
+        currentStage.close();
+
     }
 
 }

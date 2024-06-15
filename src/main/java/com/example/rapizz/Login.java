@@ -28,6 +28,12 @@ public class Login extends Application {
         stage.show();
     }
 
+    public static void startNewWindow() throws SQLException, IOException {
+        Stage stage = new Stage();
+        Login app = new Login();
+        app.start(stage);
+    }
+
     public static void main(String[] args) {
         launch(args);
     }

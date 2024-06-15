@@ -14,6 +14,8 @@ public class User {
     private final String complementAdresse;
     private final boolean isOperateur;
     private double solde;
+    private int telephone;
+    private int nbPizzaBuy;
 
     public static User getUser(String email, String password, Connection cnx) throws SQLException { // Méthode pour récupérer un utilisateur par son id, null si l'utilisateur n'existe pas
         String query = "SELECT * FROM user WHERE email = ? AND password = ?";
@@ -35,7 +37,8 @@ public class User {
                             rs.getString("adresse"),
                             rs.getString("complement_adresse"),
                             rs.getDouble("solde"),
-                            rs.getBoolean("operateur")
+                            rs.getBoolean("operateur"),
+                            rs.getInt("telephone")
                     );
                 }
             } catch (SQLException e) {
@@ -47,7 +50,7 @@ public class User {
         return null;
     }
 
-    public User(int idUser, String nom, String prenom, String email, String adresse, String complementAdresse, double solde, boolean isOperateur) {
+    public User(int idUser, String nom, String prenom, String email, String adresse, String complementAdresse, double solde, boolean isOperateur, int telephone) {
         // Initialisation des attributs
         this.idUser = idUser;
         this.nom = nom;
@@ -57,6 +60,26 @@ public class User {
         this.complementAdresse = complementAdresse;
         this.solde = solde;
         this.isOperateur = isOperateur;
+        this.telephone = telephone;
+    }
+
+    public int calculateNbPizzaBuy(Connection cnx) throws SQLException {
+        String query = "SELECT SUM(pd.quantite) AS nbPizza " +
+                "FROM commande AS c JOIN produitsvendus AS pd ON pd.id_commande = c.id_commande " +
+                "WHERE c.id_client = ?";
+
+        try (PreparedStatement pstmt = cnx.prepareStatement(query)) {
+            pstmt.setInt(1, idUser);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    this.nbPizzaBuy = rs.getInt("nbPizza");
+                }
+            } catch (SQLException e) {
+                System.out.println("Erreur lors de l'exécution de la requête, calculateNbPizzaBuy : " + e.getMessage());
+                return 0;
+            }
+        }
+        return 0;
     }
 
     public String getNom() { // Méthode pour récupérer le nom de l'utilisateur
@@ -100,8 +123,16 @@ public class User {
         return isOperateur;
     }
 
+    public int getTelephone() { // Méthode pour récupérer le numéro de téléphone de l'utilisateur
+        return telephone;
+    }
+
     public String showSolde() { // Méthode pour afficher le solde de l'utilisateur
         return solde + " €";
+    }
+
+    public int getNbPizzaBuy() {
+        return nbPizzaBuy;
     }
 
     public void updateSolde(double montant, Connection cnx) throws SQLException { // Méthode pour mettre à jour le solde de l'utilisateur
